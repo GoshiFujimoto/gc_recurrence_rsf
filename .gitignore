@@ -1,0 +1,15 @@
+# Patient-level data and intermediate results (never commit)
+*.xlsx
+*.xls
+*.csv
+*.pkl
+revision_results*.json
+
+# Outputs
+figs_out/
+figures/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
