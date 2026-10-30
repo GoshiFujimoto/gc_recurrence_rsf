@@ -24,8 +24,11 @@ STAGE_GROUPS = {
 
 # ── Predictors (10 variables, pre-specified) ─────────────────────────────────
 # Available at 4-6 weeks post-surgery (pathological results finalised).
-# CCI excluded: predicts competing event (death w/o recurrence) rather than
-# cancer-specific recurrence in the Fine-Gray competing-risks framework.
+# Fixed list; no data-driven selection. Hyperparameters fixed (not tuned).
+# Surgical approach and extent of lymphadenectomy excluded (changed over the study period).
+# Charlson Comorbidity Index excluded: it primarily predicts death without recurrence.
+# Primary analysis is cause-specific (death without recurrence censored at death);
+# Aalen-Johansen cumulative incidence is examined as a check.
 PREDICTORS = [
     'age',          # Pre-op  | patient age (years)
     'Alb',          # Pre-op  | serum albumin (g/dL)
@@ -35,10 +38,11 @@ PREDICTORS = [
     'pT_ord',       # Path.   | T-category ordinal (1a=1 ... 4b=6)
     'pN_num',       # Path.   | number of positive lymph nodes (continuous)
     'size',         # Path.   | max tumour diameter (mm)  -- 2.7% missing -> MICE
-    'ly_ord',       # Path.   | lymphovascular invasion grade 0-3 (from 'pulsatile' col)
-    'adjuvant_s1',  # Post-op | S-1 adjuvant per ACTS-GC guidelines (0/1)
-                    #           covariate to adjust for treatment differences;
-                    #           NOT a treatment-effect estimator
+    'ly_ord',       # Path.   | lymphatic invasion (ly) grade 0-3; venous invasion not included
+    'adjuvant_s1',  # Post-op | adjuvant chemotherapy, any regimen (0/1; S-1-based in 91.5%)
+                    #           column name kept for compatibility. Covariate reflecting
+                    #           selective administration (confounding by indication);
+                    #           its importance is NOT a treatment effect
 ]
 
 # ── Evaluation horizons ──────────────────────────────────────────────────────
